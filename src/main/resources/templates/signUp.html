@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <script src="js/vue.min.js"></script>
+    <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript">
+        //使用jquery方法
+
+
+        //jquery验证密码格式
+
+        //ajax提交注册
+
+        function register(){
+
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container " id="app">
+        <div class="page-header">
+            <h1>栗子壳<small>欢迎注册</small></h1>
+        </div>
+        <div style="height: 10px"></div>
+        <div class="row">
+            <div class="col-xs-1 col-sm-2 col-lg-3 "></div>
+            <div class="col-xs-10 col-sm-8 col-lg-6">
+                <form>
+                    <div class="col-xs-12 col-md-8 col-md-offset-2 form-group" v-bind:class="{ 'has-error' : userNameTip!='' }">
+                        <label>账号</label>
+                        <input type="text" class="form-control v-input checkIsExist " v-model="username">
+                        <span style="color:red">{{userNameTip}}</span>
+                    </div>
+                    <div class="col-xs-12 col-md-8 col-md-offset-2 form-group" v-bind:class="{ 'has-error' : passwordTip!='' }">
+                        <label>密码</label>
+                        <input type="password" v-model="password" class="form-control">
+                        <!--<div class="alert alert-warning" role="alert">{{passwordTip}}</div>-->
+                        <span style="color:red">{{passwordTip}}</span>
+                    </div>
+                    <div class="col-xs-12 col-md-8 col-md-offset-2 form-group" v-bind:class="{ 'has-error' : checkPasswordTip!='' }">
+                        <label>确认密码</label>
+                        <input type="password" v-model="password2" class="form-control">
+                        <span style="color:red">{{checkPasswordTip}}</span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-lg-3 "></div>
+        </div>
+        <div class="row ">
+            <div class="col-xs-1 col-sm-2 col-lg-3 "></div>
+            <div class="col-xs-10 col-sm-8 col-lg-6 ">
+                <div class="col-xs-6  col-md-4 col-md-offset-2 text-left">
+                    <button class="btn btn-default" >取消</button>
+                </div>
+                <div class="col-xs-6 col-md-4 text-right">
+                    <button class="btn btn-primary" onclick="register()">注册</button>
+                </div>
+            </div>
+            <div class="col-xs-1 col-sm-2 col-lg-3 "></div>
+        </div>
+    </div>
+
+</body>
+    <script>
+        var app = new Vue({
+            el:'#app',
+            data:{
+                username:'',
+                password:'',
+                password2:'',
+                userNameTip:'',
+                passwordTip:'',
+                checkPasswordTip:'',
+            },
+            watch: {
+                // 如果 `question` 发生改变，这个函数就会运行
+                username: function (newUserName, oldUserName) {
+                    if (this.username.length < 6 || this.username.length > 16) {
+                        this.userNameTip = '用户名长度应在6~16位之间！'
+                    } else {
+                        this.userNameTip = '';
+                    }
+
+                    if (this.username == '') {
+                        this.userNameTip = ''
+                    }
+                }, password: function (newPWD, oldPWD) {
+                    if(this.password.length<8||this.password.length>16){
+                        this.passwordTip = '密码长度应在8~16位！'
+                    }else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{8,16}$/.test(this.password)) {
+                        this.passwordTip = '密码必须包含大小写字母和数字！'
+                    }else{
+                        this.passwordTip = ''
+                    }
+                    if (this.password == '') {
+                        this.passwordTip = ''
+                    }
+                },password2: function(newPWD2,oldPWD2){
+                    if(this.password!=''&&this.password!=this.password2){
+                        console.log(111);
+                        this.checkPasswordTip = '两次密码不一致！'
+                    }
+                    if (this.password2 == '') {
+                        this.checkPasswordTip = ''
+                    }
+                }
+            }
+        })
+    </script>
+</html>
